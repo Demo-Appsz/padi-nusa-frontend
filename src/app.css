@@ -1,0 +1,134 @@
+@import 'tailwindcss';
+
+@theme {
+	--font-serif: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+	--font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+	--font-mono: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+	--bg-porcelain: #faf9f6;
+	--bg-rice-milk: #f3efe6;
+	--gold-paddy: #b6842d;
+	--gold-bright: #d4a043;
+	--emerald-sawah: #1b5e3e;
+	--ink-charcoal: #141815;
+}
+
+body {
+	font-family: var(--font-sans);
+	background-color: var(--bg-porcelain);
+	color: var(--ink-charcoal);
+	overflow-x: hidden;
+}
+
+.font-serif {
+	font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+	font-weight: 600;
+	letter-spacing: -0.02em;
+}
+
+.font-mono {
+	font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+	font-variant-numeric: tabular-nums;
+	font-weight: 500;
+}
+
+/* Subtle paper/linen tactile grain */
+.noise-overlay {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 60;
+	opacity: 0.022;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* MotionSites-style frosted white glassmorphism card with dynamic golden spotlight */
+.spotlight-card {
+	position: relative;
+	background: linear-gradient(155deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 246, 240, 0.9) 100%);
+	border: 1px solid rgba(20, 24, 21, 0.08);
+	backdrop-filter: blur(18px);
+	box-shadow: 0 12px 36px -18px rgba(20, 24, 21, 0.14);
+	transition:
+		transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+		border-color 300ms ease,
+		box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+	transform-style: preserve-3d;
+}
+
+.spotlight-card::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 320ms ease;
+	background: radial-gradient(
+		420px circle at var(--mx, 50%) var(--my, 50%),
+		rgba(212, 160, 67, 0.14),
+		rgba(27, 94, 62, 0.05) 45%,
+		transparent 75%
+	);
+}
+
+.spotlight-card:hover::before {
+	opacity: 1;
+}
+
+.spotlight-card:hover {
+	border-color: rgba(182, 132, 45, 0.42);
+	box-shadow:
+		0 24px 56px -20px rgba(20, 24, 21, 0.18),
+		0 0 28px -10px rgba(212, 160, 67, 0.18);
+}
+
+/* Scroll reveal animation */
+.reveal-hidden {
+	opacity: 0;
+	transform: translateY(28px) scale(0.985);
+}
+
+.reveal-visible {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+	transition:
+		opacity 760ms cubic-bezier(0.22, 1, 0.36, 1),
+		transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Marquee animation */
+@keyframes marquee-left {
+	0% {
+		transform: translateX(0%);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+.animate-marquee {
+	display: flex;
+	width: max-content;
+	animation: marquee-left 34s linear infinite;
+}
+
+.animate-marquee:hover {
+	animation-play-state: paused;
+}
+
+@keyframes float-slow {
+	0%,
+	100% {
+		transform: translateY(0px) scale(1);
+	}
+	50% {
+		transform: translateY(-14px) scale(1.03);
+	}
+}
+
+.animate-float-slow {
+	animation: float-slow 8s ease-in-out infinite;
+}
